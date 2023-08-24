@@ -1,10 +1,12 @@
 import ThreadCard from "@/components/cards/ThreadCard";
+import Comment from "@/components/forms/Comment";
+import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const Page = async ({ prams }: { prams: { id: string } }) => {
-  if (!prams.id) return null;
+async function page({ params }: { params: { id: string } }) {
+  if (!params.id) return null;
 
   const user = await currentUser();
 
@@ -13,7 +15,7 @@ const Page = async ({ prams }: { prams: { id: string } }) => {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const thread = await fetchThreadById(prams.id);
+  const thread = await fetchThreadById(params.id);
 
   return (
     <>
@@ -31,10 +33,16 @@ const Page = async ({ prams }: { prams: { id: string } }) => {
             comments={thread.children}
           />
         </div>
+        <div className="mt-7 ">
+          <Comment
+            threadId={thread.id}
+            currentUserImg={user.imageUrl}
+            currentUserId={JSON.stringify(userInfo._id)}
+          />
+        </div>
       </section>
-      ;
     </>
   );
-};
+}
 
-export default Page;
+export default page;
