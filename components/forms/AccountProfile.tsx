@@ -147,7 +147,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   className="account-form_image-input"
                   onChange={(e) => handleImage(e, field.onChange)}
                 />
-              </FormControl>
+              </FormControl>{" "}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -163,6 +164,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl>
                 <Input type="text" className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -178,6 +180,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl>
                 <Input type="text" className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -193,6 +196,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl>
                 <Textarea rows={10} className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
