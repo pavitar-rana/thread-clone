@@ -1,13 +1,15 @@
 "use client";
-import Link from "next/link";
 import { sidebarLinks } from "@/constants";
+import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { SignOutButton, SignedIn } from "@clerk/nextjs";
 
 function Leftsidebar() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const { userId } = useAuth();
 
   return (
     <>
@@ -17,6 +19,10 @@ function Leftsidebar() {
             const isActive =
               (pathname.includes(link.route) && link.route.length > 1) ||
               pathname === link.route;
+
+            if (link.route === "/profile") {
+              link.route = `${link.route}/${userId}`;
+            }
 
             return (
               <Link
