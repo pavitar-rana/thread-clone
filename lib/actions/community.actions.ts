@@ -8,19 +8,22 @@ import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
 
+import { currentUser } from "@clerk/nextjs";
+
 export async function createCommunity(
   id: string,
   name: string,
   username: string,
   image: string,
-  bio: string,
-  createdById: string // Change the parameter name to reflect it's an id
+  bio: string
+  // createdById: string // Change the parameter name to reflect it's an id
 ) {
   try {
     connectToDB();
+    const usernow = await currentUser();
 
     // Find the user with the provided unique id
-    const user = await User.findOne({ id: createdById });
+    const user = await User.findOne({ id: usernow?.id });
 
     if (!user) {
       throw new Error("User not found"); // Handle the case if the user with the id is not found
